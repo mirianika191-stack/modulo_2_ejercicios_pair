@@ -1,6 +1,5 @@
 USE tienda_zapatillas;
 
-
 ALTER TABLE zapatilla
 ADD COLUMN (marca VARCHAR(45) NOT NULL,
 talla INT NOT NULL);
@@ -39,4 +38,26 @@ VALUES (1, 123, '2001-12-11', 1, 2, 1, 54.98),
 
 UPDATE zapatilla
 SET color = "Amarillas" 
-WHERE color = "Rosas"
+WHERE color = "Rosas";
+
+UPDATE empleados
+SET tienda = "A Coruña" 
+WHERE tienda = "Alcobendas";
+
+SELECT*
+FROM empleados;
+
+SET SQL_SAFE_UPDATES = 0; -- Desactivar el Modo Seguro
+SET SQL_SAFE_UPDATES = 1; -- Activar el Modo Seguro
+
+
+UPDATE clientes
+SET numero_telefono = "123456728"
+WHERE nombre = "Monica";
+
+UPDATE facturas
+SET total = 90.00
+WHERE id_facturas = 2;
+
+SELECT*
+FROM facturas;
