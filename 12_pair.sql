@@ -36,11 +36,27 @@ WHERE o.OrderDate = (SELECT MAX(OrderDate)
 						FROM orders AS o2
 						WHERE o.EmployeeID = o2.EmployeeID);
                         
-SELECT OrderID, ProductID
-FROM orderdetails
-WHERE MAX (COUNT(ProductID))>= (SELECT COUNT(ProductID)
-							FROM orderdetails
-							GROUP BY ProductID)
-
-SELECT MAX(Quantity)
-FROM orderdetails;
+# Qué producto es más popular: Extraed cuál es el producto que más ha sido comprado y la cantidad que se compró.
+                      
+SELECT 
+    ProductID,
+    COUNT(DISTINCT OrderID) AS VecesComprado,
+    SUM(Quantity) AS TotalUnidades
+FROM 
+    orderdetails
+GROUP BY 
+    ProductID
+HAVING 
+    COUNT(DISTINCT OrderID) = (
+        SELECT 
+            MAX(PedidosPorProducto)
+        FROM (
+            SELECT 
+                ProductID,
+                COUNT(DISTINCT OrderID) AS PedidosPorProducto
+            FROM 
+                orderdetails
+            GROUP BY 
+                ProductID
+        ) AS sub
+    );
